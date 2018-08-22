@@ -14,9 +14,7 @@ import phone.my.com.myxianmuphone.utils.ParameterizedTypeImpl;
  */
 
 public class JsonData {
-
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
     public static Gson getGson() {
         return gson;
     }

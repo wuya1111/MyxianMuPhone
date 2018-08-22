@@ -33,6 +33,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import phone.my.com.myxianmuphone.dao.MyToast;
+import phone.my.com.myxianmuphone.presenter.MyRequerPresenter;
+import phone.my.com.myxianmuphone.service.MyCallbackInterface;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -184,9 +188,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         }
-        Intent intent=new Intent();
-        intent.setClass(LoginActivity.this,MainActivity.class);
-        startActivity(intent);
+
+        MyRequerPresenter myRequerPresenter=new MyRequerPresenter();
+        myRequerPresenter.getLogin(new MyCallbackInterface() {
+            @Override
+            public void onSuccessful(String str) {
+                Intent intent=new Intent();
+                intent.setClass(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                MyToast.onToast(LoginActivity.this,"登录成功");
+            }
+
+            @Override
+            public void onFailure(String str) {
+                MyToast.onToast(LoginActivity.this,"登录失败");
+            }
+        });
+
+
 
     }
 
