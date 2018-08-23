@@ -35,10 +35,14 @@ public class MyRequerDao {
                        if (myCallbackInterface!=null){
                            myCallbackInterface.onSuccessful(response);
                        }
+                   }else{
+                       if (myCallbackInterface!=null){
+                           myCallbackInterface.onFailure(response);
+                       }
                    }
                 }else{
                     if (myCallbackInterface!=null){
-                        myCallbackInterface.onFailure(response);
+                        myCallbackInterface.onFailure("");
                     }
 
                 }
