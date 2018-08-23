@@ -5,17 +5,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
     <Button
+        android:id="@+id/b_call"
         android:layout_width="match_parent"
         android:text="呼叫"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content" />
     <Button
+        android:id="@+id/b_query"
         android:layout_width="match_parent"
         android:text="查询余额"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content" />
     <Button
+        android:id="@+id/b_top"
         android:layout_width="match_parent"
         android:text="充值"
         android:layout_marginTop="20dp"

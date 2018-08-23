@@ -32,6 +32,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import phone.my.com.myxianmuphone.dao.MyToast;
+import phone.my.com.myxianmuphone.presenter.MyRequerPresenter;
+import phone.my.com.myxianmuphone.service.MyCallbackInterface;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -61,6 +65,7 @@ public class BackActivity extends AppCompatActivity implements LoaderCallbacks<C
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private EditText verification_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +74,7 @@ public class BackActivity extends AppCompatActivity implements LoaderCallbacks<C
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
+        verification_code = (EditText) findViewById(R.id.verification_code);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -90,6 +95,25 @@ public class BackActivity extends AppCompatActivity implements LoaderCallbacks<C
             }
         });
 
+        Button huoqu = (Button) findViewById(R.id.huoqu);
+        huoqu.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = mEmailView.getText().toString();
+                MyRequerPresenter myRequerPresenter = new MyRequerPresenter(BackActivity.this, email);
+                myRequerPresenter.getBackCode(new MyCallbackInterface() {
+                    @Override
+                    public void onSuccessful(String str) {
+                        MyToast.onToast(BackActivity.this,"获取验证码成功");
+                    }
+
+                    @Override
+                    public void onFailure(String str) {
+
+                    }
+                });
+            }
+        });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -138,11 +162,6 @@ public class BackActivity extends AppCompatActivity implements LoaderCallbacks<C
     }
 
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -151,27 +170,33 @@ public class BackActivity extends AppCompatActivity implements LoaderCallbacks<C
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
+        String sms = verification_code.getText().toString();
+        if (TextUtils.isEmpty(password) ) {
+            return;
         }
-
-        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
+            return;
         }
+        if (TextUtils.isEmpty(sms)) {
+            return;
+        }
+        MyRequerPresenter myRequerPresenter = new MyRequerPresenter(BackActivity.this, email);
+        myRequerPresenter.geBackPassw(password, sms, new MyCallbackInterface() {
+            @Override
+            public void onSuccessful(String str) {
+                MyToast.onToast(BackActivity.this,"找回密码成功，请重新登录");
+            }
+
+            @Override
+            public void onFailure(String str) {
+
+            }
+        });
     }
 
     private boolean isEmailValid(String email) {
