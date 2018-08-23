@@ -39,13 +39,12 @@
         <activity
             android:name=".BackActivity"
             android:label="@string/title_activity_back" />
-
         <activity
             android:name=".MyPayActivity"
             android:label="@string/pay" />
         <activity
             android:name=".MyBalanceActivity"
-            android:label="@string/Balance"></activity>
+            android:label="@string/Balance" />
     </application>
 
 </manifest>
