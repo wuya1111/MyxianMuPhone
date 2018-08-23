@@ -13,7 +13,7 @@
             android:id="@+id/tyue"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:text="账户余额：20"
+            android:text="账户余额：0"
             android:textSize="20dp"
             android:padding="10dp"
             android:textColor="@color/colorBlack"

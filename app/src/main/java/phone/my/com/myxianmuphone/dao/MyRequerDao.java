@@ -33,12 +33,12 @@ public class MyRequerDao {
                     JsonData jsonData=new JsonData();
                    if (jsonData.getToJsonInt(response,"msg")==0){
                        if (myCallbackInterface!=null){
-                           myCallbackInterface.onSuccessful("");
+                           myCallbackInterface.onSuccessful(response);
                        }
                    }
                 }else{
                     if (myCallbackInterface!=null){
-                        myCallbackInterface.onFailure("");
+                        myCallbackInterface.onFailure(response);
                     }
 
                 }

@@ -2,9 +2,11 @@ package phone.my.com.myxianmuphone;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import phone.my.com.myxianmuphone.dao.JsonData;
 import phone.my.com.myxianmuphone.presenter.MyRequerPresenter;
 import phone.my.com.myxianmuphone.service.MyCallbackInterface;
 import phone.my.com.myxianmuphone.utils.ACache;
@@ -32,7 +34,11 @@ public class MyBalanceActivity extends AppCompatActivity {
         myRequerPresenter.getBalance(new MyCallbackInterface() {
             @Override
             public void onSuccessful(String str) {
-
+                JsonData jsonData=new JsonData();
+                String type=  jsonData.getToJsonString(str,"type");
+                if (!TextUtils.isEmpty(type)){
+                    tyue.setText("余额："+type);
+                }
             }
 
             @Override
